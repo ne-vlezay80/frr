@@ -343,8 +343,8 @@ void connected_up(struct interface *ifp, struct connected *ifc)
 	struct route_table *m_table = zebra_vrf_table(afi, SAFI_MULTICAST, zvrf->vrf->vrf_id);
 
 	if (install_local) {
-		struct route_node *u_rn = route_node_match(u_table, &plocal);
-		struct route_node *m_rn = route_node_match(m_table, &plocal);
+		struct route_node *u_rn = route_node_lookup(u_table, (struct prefix *)&plocal);
+		struct route_node *m_rn = route_node_lookup(m_table, (struct prefix *)&plocal);
 
 		if (u_rn) {
 			rib_delete(afi, SAFI_UNICAST, zvrf->vrf->vrf_id, ZEBRA_ROUTE_LOCAL, 0, 0,
